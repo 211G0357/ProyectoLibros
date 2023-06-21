@@ -1,0 +1,73 @@
+﻿<Window x:Class="ProyectoLibros.Views.LibrosView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProyectoLibros.Views"  xmlns:ViewModels="clr-namespace:ProyectoLibros.ViewModels"
+        mc:Ignorable="d"
+        Title="LibrosView" Height="450" Width="800" MinHeight="550" MinWidth="960">
+    <Grid>
+        <DockPanel>
+            <DockPanel.DataContext>
+                <ViewModels:LibroViewModels></ViewModels:LibroViewModels>
+            </DockPanel.DataContext>
+            <DockPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Width" Value="130"></Setter>
+                    <Setter Property="Height" Value="50"></Setter>
+                    <Setter Property="Background" Value="FloralWhite"></Setter>
+                    <Setter Property="FontWeight" Value="ultrabold"></Setter>
+
+                </Style>
+                <Style TargetType="ListBox">
+                    <Setter Property="Width" Value="160"></Setter>
+                    <Setter Property="Background" Value="SkyBlue"></Setter>
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+
+                </Style>
+            </DockPanel.Resources>
+            <DockPanel>
+                <Button Command="{Binding CambiarVistaCommand}" Content="Agregar"
+                        CommandParameter="agregar" DockPanel.Dock="Bottom"></Button>
+
+            <Button Command="{Binding CambiarVistaCommand}" Content="Editar"
+                        CommandParameter="editar" DockPanel.Dock="Bottom"></Button>
+
+            <Button Command="{Binding CambiarVistaCommand}" Content="Eliminar" 
+                        CommandParameter="eliminar" DockPanel.Dock="Bottom"></Button>
+
+            <ListBox SelectedItem="{Binding Libro}" ItemsSource="{Binding libros}"
+                         DisplayMemberPath="TituloOriginal"></ListBox>
+        </DockPanel>
+
+        <ContentControl>
+            <ContentControl.Resources>
+                <local:UCAgregar x:Key="agregar"></local:UCAgregar>
+                <local:UCEditar x:Key="editar"></local:UCEditar>
+                <local:UCEliminar x:Key="eliminar"></local:UCEliminar>
+                    <local:DatosLibroView x:Key="ver" RenderTransformOrigin="0.506,0.551" ></local:DatosLibroView>
+            </ContentControl.Resources>
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Vista}" Value="ver">
+                            <Setter Property="Content" Value="{StaticResource ver}"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Vista}" Value="agregar">
+                            <Setter Property="Content" Value="{StaticResource agregar}"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Vista}" Value="editar">
+                            <Setter Property="Content" Value="{StaticResource editar}"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Vista}" Value="eliminar">
+                            <Setter Property="Content" Value="{StaticResource eliminar}"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+
+        </ContentControl>
+
+        </DockPanel>
+    </Grid>
+</Window>
